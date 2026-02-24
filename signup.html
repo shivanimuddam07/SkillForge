@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SkillForge - Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+
+<div class="card shadow p-4" style="width: 400px;">
+    <h3 class="text-center text-success mb-3">Create Account</h3>
+
+    <form id="signupForm">
+
+        <div class="mb-3">
+            <label>Full Name</label>
+            <input type="text" class="form-control" id="name" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+            <label>Password</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="password" required>
+                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password', this)">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-3">
+            <label>Confirm Password</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="confirmPassword" required>
+                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPassword', this)">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Sign Up</button>
+
+        <div class="text-center mt-3">
+            <small>Already have an account?
+                <a href="login.html">Login</a>
+            </small>
+        </div>
+
+    </form>
+</div>
+
+<script>
+
+// Show / Hide Password Function
+function togglePassword(fieldId, button) {
+    const input = document.getElementById(fieldId);
+    const icon = button.querySelector("i");
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+    }
+}
+
+document.getElementById("signupForm").addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+
+    let strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+    if (!strongPassword.test(password)) {
+        alert("Password must be 8+ chars with uppercase, lowercase, number and special character.");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    localStorage.setItem("name", name);
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
+
+    alert("Account Created Successfully!");
+    window.location.href = "login.html";
+});
+
+</script>
+
+</body>
+</html>
